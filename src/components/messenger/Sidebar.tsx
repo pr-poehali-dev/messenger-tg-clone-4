@@ -1,4 +1,5 @@
 import Icon from '@/components/ui/icon';
+import { useAuth } from '@/context/AuthContext';
 
 type Section = 'chats' | 'search' | 'contacts' | 'notifications' | 'settings' | 'profile';
 
@@ -18,6 +19,7 @@ const navItems: { id: Section; icon: string; label: string }[] = [
 ];
 
 export default function Sidebar({ active, onSelect, unreadCount, notifCount }: SidebarProps) {
+  const { user } = useAuth();
   return (
     <aside className="flex flex-col items-center w-16 h-full bg-white border-r border-gray-100 py-5 gap-1">
       <button
@@ -25,7 +27,7 @@ export default function Sidebar({ active, onSelect, unreadCount, notifCount }: S
         className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold mb-4 transition-all
           ${active === 'profile' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
       >
-        ЮП
+        {user?.avatar || 'ЮП'}
       </button>
 
       {navItems.map((item) => (

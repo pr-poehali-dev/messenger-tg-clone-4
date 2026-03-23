@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import Icon from '@/components/ui/icon';
+import { useAuth } from '@/context/AuthContext';
 
 export default function ProfilePanel() {
+  const { user, logout } = useAuth();
   const [editing, setEditing] = useState(false);
-  const [name, setName] = useState('Юрий Петров');
-  const [bio, setBio] = useState('Доступен для звонков');
-  const [phone] = useState('+7 900 000-00-00');
+  const [name, setName] = useState(user?.name || '');
+  const [bio, setBio] = useState(user?.bio || 'Доступен для звонков');
+  const phone = user?.phone || '';
 
   return (
     <div className="flex flex-col h-full">
@@ -104,6 +106,14 @@ export default function ProfilePanel() {
               </button>
             ))}
           </div>
+
+          <button
+            onClick={logout}
+            className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl border border-red-100 text-red-400 text-sm hover:bg-red-50 transition-colors"
+          >
+            <Icon name="LogOut" size={15} />
+            Выйти из аккаунта
+          </button>
         </div>
       </div>
     </div>
